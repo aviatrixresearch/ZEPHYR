@@ -7,7 +7,7 @@ This project is focused on creating a realistic simulation environment for drone
 ## Features
 
 - **3D Environmental Modeling:** Generates a 3D representation of an urban area with buildings as obstacles, based on OSM data.
-- **Drone Pathfinding:** Implements a 3D A* pathfinding algorithm to navigate drones around buildings.
+- **Drone Pathfinding:** Implements a 3D A* pathfinding algorithm to navigate drones around obstacles.
 - **Signal Strength Calculation:** Estimates the signal strength between drones and a central communication hub, considering obstacles and distance.
 - **Interactive Visualization:** Provides a real-time 3D visualization of drone movements and building structures.
 
