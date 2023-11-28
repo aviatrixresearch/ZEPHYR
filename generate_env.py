@@ -9,6 +9,7 @@ from pyproj import Proj, transform
 import xml.etree.ElementTree as ET
 import random
 from shapely.geometry import Point
+import numpy as np
 
 class BuildingHandler(osm.SimpleHandler):
     def __init__(self):
@@ -38,6 +39,17 @@ def plot_building_walls(ax, x, y, height):
 
         # Draw the wall as a quadrilateral
         ax.add_collection3d(Poly3DCollection([list(zip(wall_x, wall_y, wall_z))], color='gray', alpha=0.7))
+
+def plot_building_walls_simple(ax, building, height):
+    x, y = building.exterior.xy
+    num_points = len(x)
+
+    # Plot each wall
+    for i in range(num_points - 1):
+        wall_x = [x[i], x[i], x[i+1], x[i+1]]
+        wall_y = [y[i], y[i], y[i+1], y[i+1]]
+        wall_z = [0, height, height, 0]
+        ax.add_collection3d(Poly3DCollection([list(zip(wall_x, wall_y, wall_z))], alpha=0.7, color='grey'))
 
 def generate_drone_positions_3d(buildings_with_height, num_drones, grid, min_altitude=2, max_altitude=30):
     """
@@ -130,3 +142,49 @@ def generate_env(map_file, num_drones):
 
     return ax, buildings_with_height, grid_size, drone_positions
 
+def generate_env_simple(grid_size=(100,100), num_buildings=5, num_drones=10, min_altitude=2, max_altitude=30):
+    """
+    Generate a simple 2D environment with random buildings and drone positions.
+
+    :param grid_size: Size of the grid (width, height).
+    :param num_buildings: Number of buildings (obstacles) to generate.
+    :param num_drones: Number of drones to place.
+    :return: ax (matplotlib 3D axis), buildings, grid, drone_positions
+    """
+    grid = np.zeros(grid_size)
+    buildings = []
+
+    for _ in range(num_buildings):
+        x, y = random.randint(0, grid_size[0]-1), random.randint(0, grid_size[1]-1)
+        width, depth = random.randint(1, 10), random.randint(1, 10)
+        height = random.randint(5, 30)
+        buildings.append((Polygon([(x, y), (x + width, y), (x + width, y + depth), (x, y + depth)]), height))
+
+    drone_positions = []
+    while len(drone_positions) < num_drones:
+        x, y = random.uniform(0, grid_size[0]), random.uniform(0, grid_size[1])
+        z = random.uniform(min_altitude, max_altitude)  # Random altitude
+        point = Point(x, y)
+
+        # Check if the point is within any building's height
+        if not any(building.contains(point) and z <= building_height for building, building_height in buildings):
+            drone_positions.append((x, y, z))
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Plot buildings with walls
+    for building, height in buildings:
+        plot_building_walls_simple(ax, building, height)
+        x, y = building.exterior.xy
+        ax.plot_trisurf(x, y, [height]*len(x), alpha=0.7, color='tan')
+
+    # Plot drones in 3D
+    for x, y, z in drone_positions:
+        ax.scatter(x, y, z, c='red', marker='o')
+
+    ax.set_xlabel('X Coordinate')
+    ax.set_ylabel('Y Coordinate')
+    ax.set_zlabel('Altitude')
+
+    return ax, buildings, grid, drone_positions

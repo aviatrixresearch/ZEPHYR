@@ -1,5 +1,6 @@
 import numpy as np
 import heapq
+from shapely.geometry import LineString
 
 def line_intersects_circle(p1, p2, circle):
     # vector d
@@ -91,4 +92,28 @@ def is_collision_3d(point, obstacles, resolution):
         ox, oy, oz, dx, dy, dz = obstacle  # Obstacle position and dimensions
         if ox <= px <= ox + dx and oy <= py <= oy + dy and oz <= pz <= oz + dz:
             return True
+    return False
+
+def is_line_intersect_building(hub_position, drone_position, building):
+    """
+    Check if the line segment between the hub and a drone intersects a building in 3D space.
+
+    :param hub_position: Tuple (x, y, z) representing the position of the hub.
+    :param drone_position: Tuple (x, y, z) representing the position of the drone.
+    :param building: Shapely Polygon representing the building footprint.
+    :param building_height: Height of the building.
+    :return: True if the line intersects the building in 3D, False otherwise.
+    """
+    building_height = building[1]
+    # Create a 2D line segment from the hub to the drone
+    line_2d = LineString([hub_position[:2], drone_position[:2]])  # Only use x, y coordinates
+
+    # Check for 2D intersection with the building footprint
+    if line_2d.intersects(building[0]):
+        # Check if the drone's altitude is within the building's height
+        min_altitude = min(hub_position[2], drone_position[2])
+        max_altitude = max(hub_position[2], drone_position[2])
+        if min_altitude < building_height < max_altitude or min_altitude < building_height < max_altitude:
+            return True
+
     return False
