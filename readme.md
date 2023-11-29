@@ -18,12 +18,12 @@ This project is focused on creating a realistic simulation environment for drone
 Ensure you have the following installed:
 
 - Python 3
-- Libraries: `numpy`, `matplotlib`, `shapely`, `osmnx`, `pyproj` (there are more requirements; I will update accordingly with a requirements.txt file)
+- Libraries: `numpy`, `matplotlib`, `osmium`, `shapely`, `osmnx`, `pyproj`, `rasterio`, `requests`, `scipy`
 
 You can install these libraries using pip:
 
 ```bash
-pip install numpy matplotlib shapely osmnx pyproj
+pip install -r requirements.txt
 ```
 ### Installation
 Clone repository
