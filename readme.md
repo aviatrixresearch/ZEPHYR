@@ -1,4 +1,4 @@
-# Drone Environment Simulation
+# Environment Simulation
 
 ## Project Overview
 
@@ -6,10 +6,10 @@ This project is focused on creating a realistic simulation environment for drone
 
 ## Features
 
-- **3D Environmental Modeling:** Generates a 3D representation of an urban area with buildings as obstacles, based on OSM data.
-- **Drone Pathfinding:** Implements a 3D A* pathfinding algorithm to navigate drones around obstacles.
+- **3D Environmental Modeling:** Generates a 3D representation of an urban area with buildings as obstacles, based on OSM or random data.
+- **Node Pathfinding:** Implements a 3D A* pathfinding algorithm to navigate drones (nodes) around obstacles.
 - **Signal Strength Calculation:** Estimates the signal strength between drones and a central communication hub, considering obstacles and distance.
-- **Interactive Visualization:** Provides a real-time 3D visualization of drone movements and building structures.
+- **Interactive Visualization:** Provides a real-time 3D visualization of drone movements and building structures. (This functionality is archived and still in progress. Run /archive/beta2.py to see the idea)
 
 ## Getting Started
 
@@ -18,7 +18,7 @@ This project is focused on creating a realistic simulation environment for drone
 Ensure you have the following installed:
 
 - Python 3
-- Libraries: `numpy`, `matplotlib`, `shapely`, `osmnx`, `pyproj`
+- Libraries: `numpy`, `matplotlib`, `shapely`, `osmnx`, `pyproj` (there are more requirements; I will update accordingly with a requirements.txt file)
 
 You can install these libraries using pip:
 
