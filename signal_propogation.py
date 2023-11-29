@@ -22,7 +22,7 @@ def calculate_signal_strength(hub_position, drone_position, frequency, buildings
     fspl = 20 * np.log10(distance) + 20 * np.log10(frequency) + 20 * np.log10((4 * np.pi) / (3 * 10**8))
 
     # Add obstacle loss
-    obstacle_loss = fspl*0.25
+    obstacle_loss = fspl*0.1
     for building in buildings:
         if is_line_intersect_building(hub_position, drone_position, building):
             return fspl + obstacle_loss

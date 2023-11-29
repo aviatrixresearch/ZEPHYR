@@ -37,7 +37,7 @@ cd ZEPHYR
 
 ### Execute Simulation
 ```bash
-python main.py
+python main.py --simple
 ```
 
 ## Contact
