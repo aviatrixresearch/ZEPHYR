@@ -7,9 +7,14 @@ This project is focused on creating a realistic simulation environment for drone
 ## Features
 
 - **3D Environmental Modeling:** Generates a 3D representation of an urban area with buildings as obstacles, based on OSM or random data.
+
+![Complex Environment Model](assets/tuscaloosa.PNG)
+
 - **Node Pathfinding:** Implements a 3D A* pathfinding algorithm to navigate drones (nodes) around obstacles.
 - **Signal Strength Calculation:** Estimates the signal strength between drones and a central communication hub, considering obstacles and distance.
 - **Interactive Visualization:** Provides a real-time 3D visualization of drone movements and building structures. (This functionality is archived and still in progress. Run /archive/beta2.py to see the idea)
+
+![Simulation with Simple Environment Model](/assets/isometric.PNG)
 
 ## Getting Started
 
